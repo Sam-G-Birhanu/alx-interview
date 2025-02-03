@@ -1,42 +1,30 @@
 #!/usr/bin/python3
-"""0. Prime Game """
+"""
+Module used to
+"""
 
 
-def isWinner(x, nums):
-    """x - rounds
-    nums - numbers list
+def island_perimeter(grid):
+    """[summary]
+
+    Args:
+        grid ([type]): [description]
+
+    Returns:
+        [type]: [description]
     """
-    if x <= 0 or nums is None:
-        return None
-    if x != len(nums):
-        return None
 
-    ben = 0
-    maria = 0
+    perimeter = 0
+    m = len(grid)
+    n = len(grid[0])
 
-    a = [1 for x in range(sorted(nums)[-1] + 1)]
-    a[0], a[1] = 0, 0
-    for i in range(2, len(a)):
-        rm_multiples(a, i)
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 1:
+                for x, y in [(0, 1), (1, 0), (-1, 0), (0, -1)]:
+                    α, β = i + x, j + y
+                    # print(α, β)
+                    if α >= m or β >= n or α < 0 or β < 0 or grid[α][β] == 0:
+                        perimeter += 1
 
-    for i in nums:
-        if sum(a[0:i + 1]) % 2 == 0:
-            ben += 1
-        else:
-            maria += 1
-    if ben > maria:
-        return "Ben"
-    if maria > ben:
-        return "Maria"
-    return None
-
-
-def rm_multiples(ls, x):
-    """removes multiple
-    of primes
-    """
-    for i in range(2, len(ls)):
-        try:
-            ls[i * x] = 0
-        except (ValueError, IndexError):
-            break
+    return perimeter
